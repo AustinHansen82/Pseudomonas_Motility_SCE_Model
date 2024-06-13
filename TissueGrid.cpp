@@ -224,29 +224,15 @@ void TissueGrid::RoundToZero()
     {
         for (int j=0; j< numberGridsX; j++)
         {
-            if (grids.at(j).at(i).value < pow(10, -30) )
+            grids.at(j).at(i).value = grad_scale*(sqrt(pow((100.0),2.0)+pow((100.0),2.0))-sqrt(pow((j-cntrX),2.0)+pow((i-cntrY),2.0))); // Radial Linear Function
+            // grids.at(j).at(i).value = 1; // Constant Function
+            /*if (grids.at(j).at(i).value < pow(10, -30) )
             {
                 grids.at(j).at(i).value = 0.0 ;
             }
+            */
         }
     }
-    
-    //Calculating the values based on analytical solutions
-   /* double cntrX = numberGridsX/2.0 ;
-    double cntrY = numberGridsY/2.0 ;
-    for (int i = 0; i<numberGridsY; i++)
-    {
-        for (int j=0; j< numberGridsX; j++)
-        {
-            grids.at(j).at(i).value = 182.0*exp((100.0*sqrt(2.0)-(sqrt(pow((j-cntrX),2.0)+pow((i-cntrY),2.0))))/((100.0*sqrt(2.0))/grad_scale));
-            //grids.at(j).at(i).value = pow(1/(1+sqrt(pow((j-cntrX)/30.0,2)+pow((i-cntrY)/30.0,2))),1.5);
-            //grids.at(j).at(i).value = 182.0*exp(i/50.0);
-            //grids.at(j).at(i).value = 182.0;
-            //grids.at(j).at(i).value = 182.0*exp(i/grad_scale);
-        }
-    }
-    */
-    
 }
 
 void TissueGrid::UpdateTGrid_FromConfigFile()

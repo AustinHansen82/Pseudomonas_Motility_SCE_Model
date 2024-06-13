@@ -56,6 +56,11 @@ public:
     std::lognormal_distribution<double> runDuration_distribution ;
     std::lognormal_distribution<double> wrapDuration_distribution ;
     
+    std::mt19937 reversal_rng{std::random_device{}()};
+    std::uniform_real_distribution<double> unif_distribution{0.0, 1.0};
+    std::mt19937 multiplier_rng{std::random_device{}()};
+    std::uniform_int_distribution<int> unif_int_distribution{0, 1};
+    
     //Needed to calibrate angle distributions with experimental data.( Not calibrated)
     double normal_turnAngle_mean = 0.0 ;
     double normal_turnAngle_SDV = 3.1415/6.0 * (1.0/3.0) / ( (10.0 * 1.0) * 0.3 )  ;
@@ -265,6 +270,12 @@ public:
     
     //write information of the baceria art the current time including its physical and chemical environment
     void WriteBacteria_AllStats () ;
+    void WriteReversalDataByBacteria(int i);
+    void WriteWrapDataByBacteria(int i);
+    void WriteReversalForce(int i);
+    void WriteReversalForce2(int i);
+    
+    
     void Initialize_Distributions_RNG () ;     // Used to calibrate durations to experimental data
     
     //---------------------------- Metabolism Functions -----------------------------------------------

@@ -44,6 +44,7 @@ public:
     //Center of the fungal network
     double initX = 500.0 ;
     double initY = 500 ;
+    double Bacteria_inLiquid = 1.0 ; //Parameter that takes 1 if Simulation is In Liquid and 0 if with Fungi
     int init_Count = 4 ;
     bool loading_Network = true ;
     bool branchIsTip = false ;

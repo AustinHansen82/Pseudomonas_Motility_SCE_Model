@@ -32,7 +32,23 @@ int main (int argc, char* argv[])
    srand(time (0)) ;
    cout<<"Search area for slime is "<<tissueBacteria.searchAreaForSlime<<endl ;
     
+    //-----------------------------Auto Saving Scripts -----------------------------------------------
+    char currentDir[PATH_MAX]; // defines a predefined variable currentDir of size of maximal path length
+    if (getcwd(currentDir, sizeof(currentDir)) != NULL) { //getcwd is a unix function - accepts a pointer to the buffer where the workind directory path will be stored and the maximum size
+        std::cout << "Current directory: " << currentDir << std::endl;
+    } else {
+        std::cerr << "Error getting current directory." << std::endl;
+        return 1;
+    }
+       
+    std::string scriptPath = "\"" + std::string(currentDir) + "/Auto_Save_Model.sh\""; // the backslashes \ surround string in double quotes
+    std::cout << "Executing script at: " << scriptPath << std::endl;
+
+    // Also encapsulate the tissueBacteria.statsFolder in double quotes
+    string fullCommand = scriptPath + " \"" + tissueBacteria.statsFolder + "\"";
+    system(fullCommand.c_str()); // Execute the bash script
     
+
     //---------------------------- Defining output files and directories ------------------------------
     ofstream ProteinLevelFile ;
     ProteinLevelFile.open(tissueBacteria.statsFolder + "ProteinLevelFile.txt") ;
@@ -150,7 +166,7 @@ int main (int argc, char* argv[])
             //  tissueBacteria.PiliForce() ;
             
             
-            if (l%1000==0 && l%inverseDt!=0)
+            if (l%1000==0 && l%inverseDt!=0 && tissueBacteria.chemotacticMechanism == metabolism)
             {
                cout<<(l-initialNt)/inverseDt<<endl ;
                //tissueBacteria.UpdateReversalFrequency() ;       // test Effect of chemoattacrant on reversal motion

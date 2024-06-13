@@ -44,14 +44,22 @@ void Fungi::Find_Hyphae_Tips()
 void Fungi::Find_Hyphae_Tips2()
 {
     tips_Coord.resize(2) ;
-    for (uint i=0 ; i<hyphaeSegments.size() ; i++)
+    if (Bacteria_inLiquid == 1)
     {
-        
-        if (hyphaeSegments[i].can_extend == true )
+        tips_Coord[0].push_back(500.0) ;
+        tips_Coord[1].push_back(500.0) ;
+    }
+    else
+    {
+        for (uint i=0 ; i<hyphaeSegments.size() ; i++)
         {
-            tips_Coord[0].push_back(hyphaeSegments[i].x2) ;
-            tips_Coord[1].push_back(hyphaeSegments[i].y2) ;
-            tips_SegmentID.push_back(i);
+            
+            if (hyphaeSegments[i].can_extend == true )
+            {
+                tips_Coord[0].push_back(hyphaeSegments[i].x2) ;
+                tips_Coord[1].push_back(hyphaeSegments[i].y2) ;
+                tips_SegmentID.push_back(i);
+            }
         }
     }
 }
@@ -261,5 +269,6 @@ void Fungi::UpdateFungi_FromConfigFile()
     hyphaeOverLiq = globalConfigVars.getConfigValue("hyphae_OverLiq").toDouble() ;
     loading_Network = static_cast<bool>(globalConfigVars.getConfigValue("hyphae_Loading_Network").toInt() ) ;
     branchIsTip = static_cast<bool>(globalConfigVars.getConfigValue("hyphae_BranchIsTip").toInt() ) ;
+    Bacteria_inLiquid = globalConfigVars.getConfigValue("Bacteria_inLiquid").toDouble() ;
     
 }

@@ -1325,6 +1325,7 @@ double TissueBacteria:: Bacterial_HighwayFollowing (int i, double R)        // i
 //-----------------------------------------------------------------------------------------------------
 void TissueBacteria:: Reverse_IndividualBacteriaa (int i)
 {
+    WriteReversalDataByBacteria(i);
    // bacteria[i].directionOfMotion = ! bacteria[i].directionOfMotion ;
     bacteria[i].turnStatus = true ;
     bacteria[i].turnTimer = 0.0 ;
@@ -1333,14 +1334,16 @@ void TissueBacteria:: Reverse_IndividualBacteriaa (int i)
     if (bacteria[i].attachedToFungi == false || inLiquid == true)
     {
         
-        bacteria[i].turnAngle = (2.0*(rand() / (RAND_MAX + 1.0))-1.0 ) * bacteria[i].maxTurnAngle ;
-        /*
-        //Normal distribution need calibrration.
-        //Double check to avoid repetition
-        bacteria[i].turnAngle = turnAngle_distribution(turnAngle_seed) ;
-        */
-        //cout<< "turning angle for "<<i<<"th bacteria is: "<<bacteria[i].turnAngle << endl ;
+        //bacteria[i].turnAngle = (2.0*(rand() / (RAND_MAX + 1.0))-1.0 ) * bacteria[i].maxTurnAngle ;
+        double random_number = unif_distribution(reversal_rng);
+        bacteria[i].turnAngle = (std::log((random_number-1.0017) / (-1.0017)))/ (-18.11);
         
+        // Calculate a Random value which is either +1 or -1
+        int Random_Multiplier = unif_int_distribution(multiplier_rng);
+        int Random_Multiplier_Value = Random_Multiplier == 0 ? -1 : 1;
+        WriteReversalForce(i);
+        bacteria[i].turnAngle = bacteria[i].turnAngle * Random_Multiplier_Value;
+        WriteReversalForce2(i);
     }
     else
     {
@@ -1370,7 +1373,7 @@ void TissueBacteria:: Reverse_IndividualBacteriaa (int i)
         bacteria[i].ljnodes[j].y = (bacteria[i].nodes[j].y + bacteria[i].nodes[j+1].y)/2 ;
     }
     Cal_BacteriaOrientation (i) ;
-    
+    WriteReversalDataByBacteria(i);
 }
 //-----------------------------------------------------------------------------------------------------
 void TissueBacteria:: Check_Perform_AllReversing_andWrapping()
@@ -1407,6 +1410,7 @@ void TissueBacteria:: Check_Perform_AllReversing_andWrapping()
                     {
                         bacteria[i].wrapAngle *= -1.0 ;
                     }
+                    WriteWrapDataByBacteria(i);
                 }
                 else
                 {
@@ -1421,6 +1425,8 @@ void TissueBacteria:: Check_Perform_AllReversing_andWrapping()
             }
             if (bacteria[i].wrapTimer > bacteria[i].wrapPeriod)
             {
+                WriteWrapDataByBacteria(i);
+
                 bacteria[i].wrapMode = false ;
                 bacteria[i].wrapTimer = 0.0 ;
                 bacteria[i].wrapAngle = 0.0 ;
@@ -1463,6 +1469,7 @@ void TissueBacteria:: Check_Perform_AllReversing_andWrapping()
                     {
                         bacteria[i].wrapAngle *= -1.0 ;
                     }
+                    WriteWrapDataByBacteria(i);
                 }
                 else
                 {
@@ -1478,6 +1485,8 @@ void TissueBacteria:: Check_Perform_AllReversing_andWrapping()
             }
             else if ( bacteria[i].wrapMode == true && bacteria[i].motilityMetabolism.switchMode == true)
             {
+                WriteWrapDataByBacteria(i);
+
                 bacteria[i].wrapMode = false ;
                 bacteria[i].wrapTimer = 0.0 ;
                 bacteria[i].wrapAngle = 0.0 ;
@@ -1903,6 +1912,7 @@ void TissueBacteria:: Handle_BacteriaTurnOrientation ()
             
             if (bacteria[i].turnTimer > turnPeriod)
             {
+                WriteReversalDataByBacteria(i);
                 bacteria[i].turnStatus = false ;
                 bacteria[i].turnTimer = 0.0 ;
                 bacteria[i].turnAngle = 0.0 ;
@@ -1932,8 +1942,8 @@ double TissueBacteria:: Cal_BacteriaOrientation (int i)
 
 {
     
-    double ax = 1.0 *(bacteria[i].nodes[1].x - bacteria[i].nodes[0].x) ;
-    double ay = 1.0 *(bacteria[i].nodes[1].y - bacteria[i].nodes[0].y) ;
+    double ax = 1.0 *(bacteria[i].nodes[0].x - bacteria[i].nodes[1].x) ;
+    double ay = 1.0 *(bacteria[i].nodes[0].y - bacteria[i].nodes[1].y) ;
     double Cos = ax/sqrt(ax*ax+ay*ay) ;
     double orientationBacteria = acos(Cos)  ;        // orientation of the bacteria in radian
     if(ay<0.0) orientationBacteria *= -1.0 ;
@@ -2433,6 +2443,58 @@ void TissueBacteria:: WriteSwitchProbabilitiesByBacteria()
     strSwitchP2<< endl ;
     }
 }
+void TissueBacteria:: WriteReversalDataByBacteria(int i)
+{   double orientation_print = Cal_BacteriaOrientation(i);
+        ofstream strReversal1;
+        strReversal1.open(statsFolder + "WriteReversalData_Bacteria" + to_string(i) + ".txt", ios::app);
+        {
+            strReversal1 << bacteria[i].turnStatus << '\t'
+            << setw(10) << bacteria[i].turnAngle << '\t'
+            << setw(10) << bacteria[i].nodes[0].fMotorx << '\t'
+            << setw(10) << bacteria[i].nodes[0].fMotory << '\t'
+            << setw(10) << orientation_print << '\t';
+                
+        }
+        strReversal1<< endl ;
+}
+
+void TissueBacteria:: WriteReversalForce(int i)
+{
+        ofstream strReversal2;
+        strReversal2.open(statsFolder + "WriteReversalForce" + ".txt", ios::app);
+        {
+            strReversal2
+            << setw(10) << bacteria[i].turnAngle << '\t';
+                
+        }
+        strReversal2<< endl ;
+}
+void TissueBacteria:: WriteReversalForce2(int i)
+{
+        ofstream strReversal3;
+        strReversal3.open(statsFolder + "WriteReversalForce2" + ".txt", ios::app);
+        {
+            strReversal3
+            << setw(10) << bacteria[i].turnAngle << '\t';
+                
+        }
+        strReversal3<< endl ;
+}
+
+void TissueBacteria:: WriteWrapDataByBacteria(int i)
+{   double orientation_print = Cal_BacteriaOrientation(i);
+        ofstream strReversal1;
+        strReversal1.open(statsFolder + "WriteWrapData_Bacteria" + to_string(i) + ".txt", ios::app);
+        {
+            strReversal1 << bacteria[i].wrapMode << '\t'
+            << setw(10) << bacteria[i].wrapAngle << '\t'
+            << setw(10) << bacteria[i].maxRunDuration << '\t'
+            << setw(10) << orientation_print << '\t';
+                
+        }
+        strReversal1<< endl ;
+}
+
 //-----------------------------------------------------------------------------------------------------
 
 void TissueBacteria::Update_MM_Legand()
