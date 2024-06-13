@@ -1353,12 +1353,13 @@ void TissueBacteria:: Reverse_IndividualBacteriaa (int i)
     {
         bacteria[i].turnAngle = 0.0 ;
     }
-    
+    /*
     if (bacteria[i].sourceWithin == false)
     {
         //bacteria[i].sourceWithin = bacteria[i].SourceRegion() ;
         bacteria[i].numberReverse += 1 ;
     }
+    */
     int start = 0;
     int end = nnode-1 ;
     node temp  ;
@@ -2514,7 +2515,7 @@ void TissueBacteria:: WriteWrapDataByBacteria2(int i)
         ofstream strReversal1;
         strReversal1.open(statsFolder + "WriteWrapData_Bacteria2_" + to_string(i) + ".txt", ios::app);
         {
-            strReversal1 << bacteria[i].wrapTime << '\t';
+            strReversal1 << bacteria[i].wrapTimer << '\t';
 
         }
         strReversal1<< endl ;
