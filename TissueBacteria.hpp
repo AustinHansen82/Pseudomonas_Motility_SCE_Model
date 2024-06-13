@@ -53,6 +53,7 @@ public:
     double lognormal_wrap_a = 1.0 ;
     std::default_random_engine runDuration_seed ;
     std::default_random_engine wrapDuration_seed ;
+    int seed = 123456789;
     std::lognormal_distribution<double> runDuration_distribution ;
     std::lognormal_distribution<double> wrapDuration_distribution ;
     
@@ -272,6 +273,7 @@ public:
     void WriteBacteria_AllStats () ;
     void WriteReversalDataByBacteria(int i);
     void WriteWrapDataByBacteria(int i);
+    void WriteWrapDataByBacteria2(int i);
     void WriteReversalForce(int i);
     void WriteReversalForce2(int i);
     
