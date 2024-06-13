@@ -224,15 +224,24 @@ void TissueGrid::RoundToZero()
     {
         for (int j=0; j< numberGridsX; j++)
         {
-            grids.at(j).at(i).value = grad_scale*(sqrt(pow((100.0),2.0)+pow((100.0),2.0))-sqrt(pow((j-cntrX),2.0)+pow((i-cntrY),2.0))); // Radial Linear Function
-            // grids.at(j).at(i).value = 1; // Constant Function
-            /*if (grids.at(j).at(i).value < pow(10, -30) )
+            if (grids.at(j).at(i).value < pow(10, -30) )
             {
                 grids.at(j).at(i).value = 0.0 ;
             }
-            */
         }
     }
+    /*
+        double cntrX = numberGridsX/2.0 ;
+        double cntrY = numberGridsY/2.0 ;
+        for (int i = 0; i<numberGridsY; i++)
+        {
+            for (int j=0; j< numberGridsX; j++)
+            {
+                grids.at(j).at(i).value = grad_scale*(sqrt(pow((100.0),2.0)+pow((100.0),2.0))-sqrt(pow((j-cntrX),2.0)+pow((i-cntrY),2.0))); // Radial Linear Function
+                // grids.at(j).at(i).value = 1; // Constant Function
+            }
+        }
+    */
 }
 
 void TissueGrid::UpdateTGrid_FromConfigFile()
