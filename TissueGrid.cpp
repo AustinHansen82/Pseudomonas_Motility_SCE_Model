@@ -142,7 +142,7 @@ void TissueGrid::EulerMethod()
     while (status == false && l < maxIterator) //10000
     {
         status = true ;
-        double smallValue = 0.0000001 ;
+        double smallValue = 0.0001 ;
         ClearChanges() ;
         DiffusionChanges() ;
         //DegredationChanges() ;

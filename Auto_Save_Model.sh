@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # List of file names to be copied and stored
-FILES=("main.cpp" "Bacteria.cpp" "Bacteria.hpp" "ConfigParser.cpp" "ConfigParser.h" "driver.cpp" "driver.h" "Fungi.cpp" "Fungi.hpp" "Grid.cpp" "Grid.hpp" "hyphaeSegment.cpp" "hyphaeSegment.h" "TissueBacteria.cpp" "TissueBacteria.hpp" "TissueGrid.cpp" "TissueGrid.hpp")
+FILES=("main.cpp" "Bacteria.cpp" "Bacteria.hpp" "ConfigParser.cpp" "ConfigParser.h" "Diffusion2D.cpp" "Diffusion2D.hpp" "driver.cpp" "driver.h" "Fungi.cpp" "Fungi.hpp" "Grid.cpp" "Grid.hpp" "hyphaeSegment.cpp" "hyphaeSegment.h" "Nodes.cpp" "Nodes.hpp" "TissueBacteria.cpp" "TissueBacteria.hpp" "TissueGrid.cpp" "TissueGrid.hpp" "resources/bacteria_M.cfg")
 DEST_FOLDER="Model_Code"
 ZIP_NAME="Model_Code.zip"
 FINAL_DESTINATION="$1"

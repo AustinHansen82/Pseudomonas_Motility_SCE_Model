@@ -95,22 +95,22 @@ int main (int argc, char* argv[])
     inverseDt = inverseDt/ tissueBacteria.updatingFrequency ;
    
    //--------------------------- Initializations -----------------------------------------------------
+    tissueBacteria.Bacteria_Initialization() ;
+    tissueBacteria.Update_LJ_NodePositions() ;
+    tissueBacteria.Initialize_BacteriaProteinLevel() ;
+    tissueBacteria.Initialize_Distributions_RNG() ;
+    tissueBacteria.Update_BacteriaMaxDuration() ;
+    tissueBacteria.Initialize_ReversalTimes() ;
+    tissueBacteria.Initialize_Pili () ;
+    tissueBacteria.InitializeMatrix() ;
+    tissueBacteria.Initialze_AllRandomForce() ;
+
     fungi = driver(fungi) ;
     vector<HyphaeSegment> hyphaeSegments_main = fungi.hyphaeSegments ;
     
     //Bacteria would try to follow hyphae as a highway
-    tissueBacteria.sourceAlongHyphae = true ;
+    tissueBacteria.sourceAlongHyphae = false ;
     tissueBacteria.Find_FungalNetworkTrace2(fungi) ;
-    
-    tissueBacteria.Bacteria_Initialization() ;
-   tissueBacteria.Update_LJ_NodePositions() ;
-   tissueBacteria.Initialize_BacteriaProteinLevel() ;
-   tissueBacteria.Initialize_Distributions_RNG() ;
-   tissueBacteria.Update_BacteriaMaxDuration() ;
-   tissueBacteria.Initialize_ReversalTimes() ;
-    tissueBacteria.Initialize_Pili () ;
-    tissueBacteria.InitializeMatrix() ;
-   tissueBacteria.Initialze_AllRandomForce() ;
    
    //--------------------------- Chemical diffusion setup -----------------------------------------------------
    

@@ -1335,7 +1335,6 @@ void TissueBacteria:: Reverse_IndividualBacteriaa (int i)
     if (bacteria[i].attachedToFungi == false || inLiquid == true)
     {
         
-        //bacteria[i].turnAngle = (2.0*(rand() / (RAND_MAX + 1.0))-1.0 ) * bacteria[i].maxTurnAngle ;
         double random_number = unif_distribution(reversal_rng);
         bacteria[i].turnAngle = (std::log((random_number-1.0017) / (-1.0017)))/ (-18.11);
         
@@ -1408,12 +1407,14 @@ void TissueBacteria:: Check_Perform_AllReversing_andWrapping()
                     
                     bacteria[i].wrapMode = true ;
                     bacteria[i].maxRunDuration = log_normal_truncated_ab_sample ( -.3662, .9178, 0, 4, seed );
+                    //bacteria[i].maxRunDuration = .5; //Used for Wrap Calibration
                     bacteria[i].wrapPeriod = bacteria[i].maxRunDuration;
                     
                     //bacteria[i].maxRunDuration = bacteria[i].LogNormalMaxRunDuration(wrapDuration_distribution,wrapDuration_seed, lognormal_wrap_a, run_calibrated, 1.0/bacteria[i].wrapRate ) ;
                   //  bacteria[i].wrapAngle = (2.0*(rand() / (RAND_MAX + 1.0))-1.0 ) * bacteria[i].maxWrapAngle ;
+                  //  bacteria[i].wrapAngle = (2.0*(rand() / (RAND_MAX + 1.0))-1.0 ) * bacteria[i].maxTurnAngle ; // Used for Wrap Angle Calibration
                     bacteria[i].wrapAngle = 180 - (51.08*exp(-1.439*bacteria[i].maxRunDuration)+87.02);
-                    bacteria[i].wrapAngle = bacteria[i].wrapAngle/(396*bacteria[i].maxRunDuration);
+                    bacteria[i].wrapAngle = bacteria[i].wrapAngle/(398.67*bacteria[i].maxRunDuration);
                     //bacteria[i].wrapAngle = wrapAngle_distribution(wrapAngle_seed);
                     if ( rand() / (RAND_MAX + 1.0) < 0.5)
                     {
@@ -1428,7 +1429,8 @@ void TissueBacteria:: Check_Perform_AllReversing_andWrapping()
                     bacteria[i].wrapTimer = 0.0 ;
                     bacteria[i].wrapAngle = 0.0 ;
                      */
-                    bacteria[i].maxRunDuration = bacteria[i].LogNormalMaxRunDuration(runDuration_distribution, runDuration_seed, lognormal_run_a, run_calibrated, 1.0/reversalRate) ;
+                    //bacteria[i].maxRunDuration = bacteria[i].LogNormalMaxRunDuration(runDuration_distribution, runDuration_seed, lognormal_run_a, run_calibrated, 1.0/reversalRate) ;
+                    bacteria[i].maxRunDuration = log_normal_truncated_ab_sample( .7144, .7440, 0, 9.6, seed );
                     Reverse_IndividualBacteriaa(i) ;
                 }
             }
@@ -1442,7 +1444,8 @@ void TissueBacteria:: Check_Perform_AllReversing_andWrapping()
                 bacteria[i].wrapAngle = 0.0 ;
                 
                 bacteria[i].internalReversalTimer  = 0.0 ;
-                bacteria[i].maxRunDuration = bacteria[i].LogNormalMaxRunDuration(runDuration_distribution, runDuration_seed, lognormal_run_a, run_calibrated, 1.0/reversalRate) ;
+                //bacteria[i].maxRunDuration = bacteria[i].LogNormalMaxRunDuration(runDuration_distribution, runDuration_seed, lognormal_run_a, run_calibrated, 1.0/reversalRate) ;
+                bacteria[i].maxRunDuration = log_normal_truncated_ab_sample( .7144, .7440, 0, 9.6, seed );
                 Reverse_IndividualBacteriaa(i) ;
                 
             }
@@ -1472,11 +1475,13 @@ void TissueBacteria:: Check_Perform_AllReversing_andWrapping()
                     
                     bacteria[i].wrapMode = true ;
                     bacteria[i].maxRunDuration = log_normal_truncated_ab_sample ( -.3662, .9178, 0, 4, seed );
+                    // bacteria[i].maxRunDuration = .5; // Used for Wrap Angle Calibration
                     bacteria[i].wrapPeriod = bacteria[i].maxRunDuration;
                     //bacteria[i].maxRunDuration = bacteria[i].LogNormalMaxRunDuration(wrapDuration_distribution,wrapDuration_seed, lognormal_wrap_a, run_calibrated, 1.0/bacteria[i].wrapRate) ;
                   //  bacteria[i].wrapAngle = (2.0*(rand() / (RAND_MAX + 1.0))-1.0 ) * bacteria[i].maxWrapAngle ;
+                  //  bacteria[i].wrapAngle = (2.0*(rand() / (RAND_MAX + 1.0))-1.0 ) * bacteria[i].maxTurnAngle ; // Used for Wrap Angle Calibration
                     bacteria[i].wrapAngle = 180 - (51.08*exp(-1.439*bacteria[i].maxRunDuration)+87.02);
-                    bacteria[i].wrapAngle = bacteria[i].wrapAngle/(396*bacteria[i].maxRunDuration);
+                    bacteria[i].wrapAngle = bacteria[i].wrapAngle/(398.67*bacteria[i].maxRunDuration);
                     //bacteria[i].wrapAngle = wrapAngle_distribution(wrapAngle_seed);
                     if ( rand() / (RAND_MAX + 1.0) < 0.5)
                     {
@@ -1491,7 +1496,8 @@ void TissueBacteria:: Check_Perform_AllReversing_andWrapping()
                     bacteria[i].wrapTimer = 0.0 ;
                     bacteria[i].wrapAngle = 0.0 ;
                      */
-                    bacteria[i].maxRunDuration = bacteria[i].LogNormalMaxRunDuration(runDuration_distribution, runDuration_seed, lognormal_run_a, run_calibrated, 1.0/reversalRate) ;
+                    //bacteria[i].maxRunDuration = bacteria[i].LogNormalMaxRunDuration(runDuration_distribution, runDuration_seed, lognormal_run_a, run_calibrated, 1.0/reversalRate) ;
+                    bacteria[i].maxRunDuration = log_normal_truncated_ab_sample( .7144, .7440, 0, 9.6, seed );
                     Reverse_IndividualBacteriaa(i) ;
                     bacteria[i].motilityMetabolism.switchMode = false ;
                 }
@@ -1505,7 +1511,8 @@ void TissueBacteria:: Check_Perform_AllReversing_andWrapping()
                 bacteria[i].wrapAngle = 0.0 ;
                 
                 bacteria[i].internalReversalTimer  = 0.0 ;
-                bacteria[i].maxRunDuration = bacteria[i].LogNormalMaxRunDuration(runDuration_distribution, runDuration_seed, lognormal_run_a, run_calibrated, 1.0/reversalRate) ;
+                //bacteria[i].maxRunDuration = bacteria[i].LogNormalMaxRunDuration(runDuration_distribution, runDuration_seed, lognormal_run_a, run_calibrated, 1.0/reversalRate) ;
+                bacteria[i].maxRunDuration = log_normal_truncated_ab_sample( .7144, .7440, 0, 9.6, seed );
                 Reverse_IndividualBacteriaa(i) ;
                 bacteria[i].motilityMetabolism.switchMode = false ;
                 
@@ -2008,7 +2015,8 @@ void TissueBacteria:: UpdateReversalFrequency ()
                 //bacteria[i].reversalPeriod = 1.0/ reversalRate ;      //constant run durations
                 if (bacteria[i].wrapMode == false)
                 {
-                    bacteria[i].reversalPeriod = max(bacteria[i].maxRunDuration, minimumRunTime) ;
+                    bacteria[i].reversalPeriod = bacteria[i].maxRunDuration;
+                    //bacteria[i].reversalPeriod = max(bacteria[i].maxRunDuration, minimumRunTime) ;
                 }
                 else
                 {
@@ -2028,7 +2036,8 @@ void TissueBacteria:: UpdateReversalFrequency ()
                 //test
                 if (bacteria[i].wrapMode == false)
                 {
-                    bacteria[i].reversalPeriod = max(tmpPeriod, minimumRunTime ) ;
+                    bacteria[i].reversalPeriod = tmpPeriod;
+                    //bacteria[i].reversalPeriod = max(tmpPeriod, minimumRunTime ) ;
                 }
                 else
                 {
@@ -2555,8 +2564,8 @@ void TissueBacteria::Update_BacteriaMaxDuration()
     {
         for (int i=0; i<nbacteria; i++)
         {
-            bacteria[i].maxRunDuration = bacteria[i].LogNormalMaxRunDuration(runDuration_distribution, runDuration_seed, lognormal_run_a, run_calibrated, 1.0/reversalRate ) ;
-            
+            //bacteria[i].maxRunDuration = bacteria[i].LogNormalMaxRunDuration(runDuration_distribution, runDuration_seed, lognormal_run_a, run_calibrated, 1.0/reversalRate ) ;
+            bacteria[i].maxRunDuration = log_normal_truncated_ab_sample( .7144, .7440, 0, 9.6, seed );
         }
     }
     else
