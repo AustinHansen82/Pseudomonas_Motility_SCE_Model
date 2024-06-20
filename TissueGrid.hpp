@@ -5,6 +5,13 @@
 
 #include "Grid.hpp"
 
+enum Chemo_Profile_Type
+{
+    production_profile = 0 ,
+    linear_profile = 1 ,
+    experimental_profile = 2
+};
+
 class TissueGrid
 {
 public:
@@ -35,7 +42,8 @@ public:
     //List of grid index of the sources
     vector<int> indexSourceX ;
     vector<int> indexSourceY ;
-    
+    Chemo_Profile_Type chemo_profile_type = production_profile ;
+
     int machineID = 1  ;
     string folderName = "./animation/machine" + to_string(machineID) + "/" ;
     string statsFolder = "./dataStats/machine" + to_string(machineID) + "/" ;
@@ -59,6 +67,10 @@ public:
     void UpdateChanges () ;
     //Solve diffusion equation using Euler method.
     void EulerMethod () ;
+    //Create a Linear gradient from the center based on an equation
+    void Create_Linear_Gradient () ;
+    //Use Chemoattractant profile from experiment
+    void Create_Experimental_Gradient () ;
     //Visualize the chemical concentration using the grids
     void ParaViewGrids (int) ;
     // Paraview can not read small numbers. This function round them to zaro

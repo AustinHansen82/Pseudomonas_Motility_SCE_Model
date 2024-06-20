@@ -193,7 +193,7 @@ public:
     
     void Update_LJ_NodePositions () ;
     void Initialize_ReversalTimes () ;
-    vector<vector<double> > TB_Cal_ChemoDiffusion2D (double xMin, double xMax, double yMin, double yMax,int nGridX, int nGridY ,vector<vector<double> > sources, vector<double> pSource) ;
+    vector<vector<double> > TB_Cal_ChemoDiffusion2D (double xMin, double xMax, double yMin, double yMax,int nGridX, int nGridY ,vector<vector<double> > sources, vector<double> pSource, Chemo_Profile_Type profileType) ;
     void Cal_AllLinearSpring_Forces() ;
     
     //Does not consider periodic boundary effect.

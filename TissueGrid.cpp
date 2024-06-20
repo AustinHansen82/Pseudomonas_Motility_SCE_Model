@@ -174,6 +174,63 @@ void TissueGrid::EulerMethod()
     cout<<l<<endl ;
     return ;
 }
+void TissueGrid::Create_Linear_Gradient()
+{
+    double cntrX = numberGridsX/2.0 ;
+    double cntrY = numberGridsY/2.0 ;
+    for (int i = 0; i<numberGridsY; i++)
+    {
+        for (int j=0; j< numberGridsX; j++)
+        {
+            grids.at(j).at(i).value = grad_scale*(sqrt(pow((100.0),2.0)+pow((100.0),2.0))-sqrt(pow((j-cntrX),2.0)+pow((i-cntrY),2.0))); // Radial Linear Function
+            // grids.at(j).at(i).value = 1; // Constant Function
+        }
+    }
+
+}
+
+void TissueGrid::Create_Experimental_Gradient()
+{
+    //std::ifstream file("external_concentrations4_444444444444445_new.txt");
+    //std::ifstream file("external_concentrations40.888888888888886_new.txt");
+    //std::ifstream file("external_concentrations40.888888888888886_newflipupd.txt");
+    //std::ifstream file("external_concentrations40.888888888888886_newtrans.txt");
+    //std::ifstream file("external_concentrations40.888888888888886_fliptransup.txt");
+    //std::ifstream file("external_concentrations50.67_new.txt");
+    //std::ifstream file("external_concentrations50.67_newtrans.txt");
+    //std::ifstream file("external_concentrations50.67_fliptransup.txt");
+    //std::ifstream file("external_concentrations8.88888888888889_new.txt");
+    //std::ifstream file("external_concentrations120.88888888888889_new.txt");
+    //std::ifstream file("external_concentrations156.44444444444446_new.txt");
+    //std::ifstream file("external_concentrations_t=176000.00_new.txt");
+    //std::ifstream file("external_concentrations_t=176000.00_newflipupd.txt");
+    std::ifstream file("/Users/austinhansen/Documents/Research/Bacterial Migration/Pseudomonas_Motility_SCE_Model/external_concentrations_t=160000.00_newtrans2.txt");
+    //std::ifstream file("/rhome/ahans016/bigdata/Bacterial_Migration/Fungi_In_Liquid_Simulations/external_concentrations_t=160000.00_newtrans2.txt");
+    //std::ifstream file("external_concentrations_t=176000.00_fliptransup.txt");
+
+        std::vector<std::vector<double>> External_Concentration;
+        std::string line;
+        while (std::getline(file, line))
+        {
+            std::vector<double> row;
+            std::stringstream ss(line);
+            std::string value;
+            while (std::getline(ss, value, ','))
+            {
+                row.push_back(std::stod(value));
+            }
+            External_Concentration.push_back(row);
+        }
+
+            for (int i = 0; i<numberGridsY; i++)
+            {
+                for (int j=0; j< numberGridsX; j++)
+                {
+                    grids.at(j).at(i).value = External_Concentration[j][i];
+
+                }
+            }
+}
 
 void TissueGrid::ParaViewGrids(int index)
 {
@@ -230,18 +287,6 @@ void TissueGrid::RoundToZero()
             }
         }
     }
-    /*
-        double cntrX = numberGridsX/2.0 ;
-        double cntrY = numberGridsY/2.0 ;
-        for (int i = 0; i<numberGridsY; i++)
-        {
-            for (int j=0; j< numberGridsX; j++)
-            {
-                grids.at(j).at(i).value = grad_scale*(sqrt(pow((100.0),2.0)+pow((100.0),2.0))-sqrt(pow((j-cntrX),2.0)+pow((i-cntrY),2.0))); // Radial Linear Function
-                // grids.at(j).at(i).value = 1; // Constant Function
-            }
-        }
-    */
 }
 
 void TissueGrid::UpdateTGrid_FromConfigFile()
@@ -256,5 +301,6 @@ void TissueGrid::UpdateTGrid_FromConfigFile()
     grid_dt = globalConfigVars.getConfigValue("grid_timeStep").toDouble() ;
     grad_scale = globalConfigVars.getConfigValue("grad_scale").toDouble() ;
     maxIterator = globalConfigVars.getConfigValue("grid_maxIterator").toDouble() ;
-    
+    chemo_profile_type =static_cast<Chemo_Profile_Type>( globalConfigVars.getConfigValue("chemo_profile_type").toInt() ) ;
+
 }

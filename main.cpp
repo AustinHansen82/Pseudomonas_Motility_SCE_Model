@@ -120,7 +120,7 @@ int main (int argc, char* argv[])
     fungi.WriteSourceLoc( pointSources) ;
     
    //Solve diffusion equation using Euler method
-   tissueBacteria.chemoProfile = tissueBacteria.TB_Cal_ChemoDiffusion2D(0.0, tissueBacteria.domainx, 0.0, tissueBacteria.domainy ,tissueBacteria.tGrids.numberGridsX , tissueBacteria.tGrids.numberGridsY ,pointSources, tissueBacteria.sourceProduction ) ;
+   tissueBacteria.chemoProfile = tissueBacteria.TB_Cal_ChemoDiffusion2D(0.0, tissueBacteria.domainx, 0.0, tissueBacteria.domainy ,tissueBacteria.tGrids.numberGridsX , tissueBacteria.tGrids.numberGridsY ,pointSources, tissueBacteria.sourceProduction, tissueBacteria.tGrids.chemo_profile_type ) ;
    //Save source locations in bacteria class. Used to check if the bacteria is within a source region or not
    tissueBacteria.Pass_PointSources_To_Bacteria(pointSources) ;
     

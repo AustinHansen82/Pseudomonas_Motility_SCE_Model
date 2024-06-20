@@ -553,9 +553,9 @@ void TissueBacteria::Initialize_ReversalTimes ()
 }
 
 //-----------------------------------------------------------------------------------------------------
-vector<vector<double> > TissueBacteria::TB_Cal_ChemoDiffusion2D(double xMin, double xMax, double yMin, double yMax,int nGridX , int nGridY,vector<vector<double> > sources, vector<double> pSource)
+vector<vector<double> > TissueBacteria::TB_Cal_ChemoDiffusion2D(double xMin, double xMax, double yMin, double yMax,int nGridX , int nGridY,vector<vector<double> > sources, vector<double> pSource, Chemo_Profile_Type profileType)
 {
-    tGrids = Diffusion2D(xMin, xMax, yMin, yMax,nGridX , nGridY ,sources, pSource, tGrids ) ;
+    tGrids = Diffusion2D(xMin, xMax, yMin, yMax,nGridX , nGridY ,sources, pSource, tGrids, profileType) ;
     vector<vector<double> > tmpGrid ;
     
     for (unsigned int i=0; i< tGrids.grids.size() ; i++)
@@ -2476,6 +2476,7 @@ void TissueBacteria:: WriteReversalDataByBacteria(int i)
             << setw(10) << bacteria[i].turnAngle << '\t'
             << setw(10) << bacteria[i].nodes[0].fMotorx << '\t'
             << setw(10) << bacteria[i].nodes[0].fMotory << '\t'
+            << setw(10) << bacteria[i].maxRunDuration << '\t'
             << setw(10) << orientation_print << '\t';
                 
         }
