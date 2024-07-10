@@ -194,7 +194,6 @@ int main (int argc, char* argv[])
                tissueBacteria.Update_MotilityMetabolism(.01) ;
                
             }
-            
             tissueBacteria.PositionUpdating(tissueBacteria.dt) ;
         }
         

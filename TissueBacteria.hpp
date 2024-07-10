@@ -277,7 +277,6 @@ public:
     void WriteReversalForce(int i);
     void WriteReversalForce2(int i);
     
-    
     void Initialize_Distributions_RNG () ;     // Used to calibrate durations to experimental data
     
     //---------------------------- Metabolism Functions -----------------------------------------------
