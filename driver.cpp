@@ -148,8 +148,10 @@ Fungi Load_FungalNetwork ( Fungi fungi)
 {
     // open input file
     
-    std::ifstream inputFile("hyphal_coordinates40.888888888888886.txt");
-
+    //std::ifstream inputFile("hyphal_coordinates40.888888888888886.txt");
+    std::ifstream inputFile("test2_t=36032.00_hyphal_coordinates_run0_Everywhere.txt");
+    //std::ifstream inputFile("test2_t=36032.00_hyphal_coordinates_run0_Tips.txt");
+    
     // read each line of the file
     std::string line;
     int hyphae_counter = 0;
@@ -165,22 +167,22 @@ Fungi Load_FungalNetwork ( Fungi fungi)
             if (token_counter == 0)
             {
                 new_hy.x1 = std::stod(value);
-                new_hy.x1 = (new_hy.x1/6) + fungi.initX;
+                new_hy.x1 = (new_hy.x1) + fungi.initX;
             }
             else if (token_counter == 1)
             {
                 new_hy.y1 = std::stod(value);
-                new_hy.y1 = (new_hy.y1/6) + fungi.initY ;
+                new_hy.y1 = (new_hy.y1) + fungi.initY ;
             }
             else if (token_counter == 2)
             {
                 new_hy.x2 = std::stod(value);
-                new_hy.x2 = (new_hy.x2/6) + fungi.initX;
+                new_hy.x2 = (new_hy.x2) + fungi.initX;
             }
             else if (token_counter == 3)
             {
                 new_hy.y2 = std::stod(value);
-                new_hy.y2 = (new_hy.y2/6) + fungi.initY;
+                new_hy.y2 = (new_hy.y2) + fungi.initY;
             }
             token_counter++;
         }

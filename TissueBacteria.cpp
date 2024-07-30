@@ -231,11 +231,43 @@ void TissueBacteria::CircularInitialization ()
     {
         bacteria[i].nodes[j].x = cntrX + raduis * cos( static_cast<double>(i* deltaTetta) ) ;
         bacteria[i].nodes[j].y = cntrY + raduis * sin( static_cast<double>(i* deltaTetta) ) ;
+        /*
+        //Parallel
+        a = cos( static_cast<double>(i* deltaTetta) ) ;
+        b = sin( static_cast<double>(i* deltaTetta) ) ;
+        double norm = sqrt(a*a+b*b) ;
+        a = a/norm ;
+        b = b/norm ;
+        */
         
-        a= gasdev(&idum) ;
-        b=gasdev(&idum) ;
-        a= a/ sqrt(a*a+b*b) ;
-        b = b/ sqrt(a*a+b*b) ;
+        //Perpendicular
+        a = -raduis * sin( static_cast<double>(i* deltaTetta) ) ;
+        b = raduis * cos( static_cast<double>(i* deltaTetta) ) ;
+        double norm = sqrt(a*a+b*b) ;
+        a = a/norm ;
+        b = b/norm ;
+   /*
+        // Print a and b when i is 12
+        if (i == 12)
+        {
+            std::cout << "When i = 12:" << std::endl;
+            std::cout << "a = " << a << std::endl;
+            std::cout << "b = " << b << std::endl;
+            std::cout << "x = " << bacteria[i].nodes[j].x << std::endl;
+            std::cout << "y = " << bacteria[i].nodes[j].y << std::endl;
+
+        }
+*/
+        
+        /*
+        //Random
+        a = gasdev(&idum) ;
+        b =gasdev(&idum) ;
+        double norm = sqrt(a*a+b*b) ;
+        a = a/norm ;
+        b = b/norm ;
+        */
+        
         for (int n=1; n<=(nnode-1)/2; n++)
         {
            bacteria[i].nodes[j+n].x = bacteria[i].nodes[j+n-1].x + equilibriumLength * a ; // or nodes[j].x + n * equilibriumLength * a
@@ -1009,7 +1041,7 @@ void TissueBacteria::Update_ViscousDampingCoeff()
         {
             if (inLiquid == true)
             {
-                viscousDamp[m][n] = eta_background * (liqBackground / liqLayer ) ;
+                viscousDamp[m][n] = eta_background * (1.0 / liqLayer ) ;
                 if ( (m*dx < agarThicknessX || m*dx > domainx - agarThicknessX /* || n*dy< agarThicknessY || n*dy > domainy - agarThicknessY */ ) && PBC == false )
                 {
                     viscousDamp[m][n] = eta_Barrier ;
@@ -1017,7 +1049,7 @@ void TissueBacteria::Update_ViscousDampingCoeff()
             }
             else
             {
-                viscousDamp[m][n] = eta_background* (liqBackground / slime[m][n])  ;
+                viscousDamp[m][n] = eta_background* (1.0 / slime[m][n])  ;
                 if ( (m*dx < agarThicknessX || m*dx > domainx - agarThicknessX /* || n*dy< agarThicknessY || n*dy > domainy - agarThicknessY */ ) && PBC == false )
                 {
                     viscousDamp[m][n] = eta_Barrier ;
@@ -1669,7 +1701,7 @@ void TissueBacteria:: BacterialVisualization_ParaView ()
 void TissueBacteria:: ParaView_Liquid ()
 {
      int index = index1 ;
-     if (index > 2)
+     if (index > 0)
      {
        return ;
      }
@@ -2044,6 +2076,7 @@ void TissueBacteria:: UpdateReversalFrequency ()
                 else
                 {
                     bacteria[i].wrapPeriod = tmpPeriod ;
+                    //bacteria[i].wrapPeriod = bacteria[i].maxRunDuration ;
                     //bacteria[i].wrapPeriod = max(tmpPeriod, minimumRunTime ) ;
                 }
                 

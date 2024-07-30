@@ -182,7 +182,7 @@ void TissueGrid::Create_Linear_Gradient()
     {
         for (int j=0; j< numberGridsX; j++)
         {
-            grids.at(j).at(i).value = grad_scale*(sqrt(pow((100.0),2.0)+pow((100.0),2.0))-sqrt(pow((j-cntrX),2.0)+pow((i-cntrY),2.0))); // Radial Linear Function
+            grids.at(j).at(i).value = grad_scale*(sqrt(pow((cntrX),2.0)+pow((cntrY),2.0))-sqrt(pow((j-cntrX),2.0)+pow((i-cntrY),2.0))); // Radial Linear Function
             // grids.at(j).at(i).value = 1; // Constant Function
         }
     }
@@ -205,10 +205,14 @@ void TissueGrid::Create_Experimental_Gradient()
     //std::ifstream file("external_concentrations_t=176000.00_new.txt");
     //std::ifstream file("external_concentrations_t=176000.00_newflipupd.txt");
     //std::ifstream file("/Users/austinhansen/Documents/Research/Bacterial Migration/Pseudomonas_Motility_SCE_Model/external_concentrations_t=160000.00_newtrans2.txt");
-    std::ifstream file("/Users/austinhansen/Documents/Research/Bacterial Migration/Pseudomonas_Motility_SCE_Model/external_concentrations_t=36032.00_newtrans2_Penic_Everywhere.txt");
-    //std::ifstream file("/rhome/ahans016/bigdata/Bacterial_Migration/Pseudomonas_Motility_SCE_Model/external_concentrations_t=36032.00_newtrans2_Penic_Everywhere.txt");
+    //std::ifstream file("/Users/austinhansen/Documents/Research/Bacterial Migration/Pseudomonas_Motility_SCE_Model/external_concentrations_t=36032.00_newtrans2_Penic_Everywhere.txt");
+    std::ifstream file("/Users/austinhansen/Documents/Research/Bacterial Migration/Pseudomonas_Motility_SCE_Model/external_concentrations_t=36032.00_newtrans2_Penic_Everywhere_4000Grid2.txt");
     //std::ifstream file("/Users/austinhansen/Documents/Research/Bacterial Migration/Pseudomonas_Motility_SCE_Model/external_concentrations_t=36032.00_newtrans2_Penic_Tips.txt");
+    //std::ifstream file("/Users/austinhansen/Documents/Research/Bacterial Migration/Pseudomonas_Motility_SCE_Model/external_concentrations_t=36032.00_newtrans2_Penic_Tips_4000Grid2.txt");
+    //std::ifstream file("/rhome/ahans016/bigdata/Bacterial_Migration/Pseudomonas_Motility_SCE_Model/external_concentrations_t=36032.00_newtrans2_Penic_Everywhere.txt");
+    //std::ifstream file("/rhome/ahans016/bigdata/Bacterial_Migration/Pseudomonas_Motility_SCE_Model/external_concentrations_t=36032.00_newtrans2_Penic_Everywhere_4000Grid2.txt");
     //std::ifstream file("/rhome/ahans016/bigdata/Bacterial_Migration/Pseudomonas_Motility_SCE_Model/external_concentrations_t=36032.00_newtrans2_Penic_Tips.txt");
+    //std::ifstream file("/rhome/ahans016/bigdata/Bacterial_Migration/Pseudomonas_Motility_SCE_Model/external_concentrations_t=36032.00_newtrans2_Penic_Tips_4000Grid2.txt");
     //std::ifstream file("/rhome/ahans016/bigdata/Bacterial_Migration/Fungi_In_Liquid_Simulations/external_concentrations_t=160000.00_newtrans2.txt");
     //std::ifstream file("external_concentrations_t=176000.00_fliptransup.txt");
 
