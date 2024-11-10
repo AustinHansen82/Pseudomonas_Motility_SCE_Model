@@ -170,6 +170,7 @@ void TissueBacteria::Initialization ()
     }
     
 }
+/*
 //-----------------------------------------------------------------------------------------------------
 void TissueBacteria::Initialization2 ()
 {
@@ -214,14 +215,40 @@ void TissueBacteria::Initialization2 ()
     }
     
 }
+*/
+void TissueBacteria::Initialization2 ()
+{
+    double a ;
+    double b ;
+    double lx = (domainx * 0.6)/nbacteria ;
+    for (int i=0 , j=(nnode-1)/2 ; i<nbacteria; i++)
+    {
+        bacteria[i].nodes[j].x = domainx/2.0 ;
+        bacteria[i].nodes[j].y = domainy*0.2 + lx*i;
+        a= gasdev(&idum) ;
+        b=gasdev(&idum) ;
+        double norm = sqrt(a*a+b*b) ;
+        a = a/norm ;
+        b = b/norm ;
+        for (int n=1; n<=(nnode-1)/2; n++)
+        {
+           bacteria[i].nodes[j+n].x = bacteria[i].nodes[j+n-1].x + equilibriumLength * a ; // or nodes[j].x + n * equilibriumLength * a
+           bacteria[i].nodes[j-n].x = bacteria[i].nodes[j-n+1].x - equilibriumLength * a ;
+           bacteria[i].nodes[j+n].y = bacteria[i].nodes[j+n-1].y + equilibriumLength * b ;
+           bacteria[i].nodes[j-n].y = bacteria[i].nodes[j-n+1].y - equilibriumLength * b ;
+        }
+        j=(nnode-1)/2 ;
+    }
+}
+
 
 //-----------------------------------------------------------------------------------------------------
 void TissueBacteria::CircularInitialization ()
 {
     double raduis = 0.75 * sqrt(domainx * domainx  )/2.0 ;
     double deltaTetta = 2.0 * 3.1416 / nbacteria ;
-    double cntrX = domainx/2.0 ;
-    double cntrY = domainy/2.0 ;
+    double cntrX = domainx/2.0;
+    double cntrY = domainy/2.0;
     
     double a ;
     double b ;
@@ -231,6 +258,7 @@ void TissueBacteria::CircularInitialization ()
     {
         bacteria[i].nodes[j].x = cntrX + raduis * cos( static_cast<double>(i* deltaTetta) ) ;
         bacteria[i].nodes[j].y = cntrY + raduis * sin( static_cast<double>(i* deltaTetta) ) ;
+        
         /*
         //Parallel
         a = cos( static_cast<double>(i* deltaTetta) ) ;
@@ -240,12 +268,14 @@ void TissueBacteria::CircularInitialization ()
         b = b/norm ;
         */
         
+       /*
         //Perpendicular
         a = -raduis * sin( static_cast<double>(i* deltaTetta) ) ;
         b = raduis * cos( static_cast<double>(i* deltaTetta) ) ;
         double norm = sqrt(a*a+b*b) ;
         a = a/norm ;
         b = b/norm ;
+       */
    /*
         // Print a and b when i is 12
         if (i == 12)
@@ -259,14 +289,13 @@ void TissueBacteria::CircularInitialization ()
         }
 */
         
-        /*
         //Random
         a = gasdev(&idum) ;
         b =gasdev(&idum) ;
         double norm = sqrt(a*a+b*b) ;
         a = a/norm ;
         b = b/norm ;
-        */
+        
         
         for (int n=1; n<=(nnode-1)/2; n++)
         {
@@ -1370,6 +1399,15 @@ void TissueBacteria:: Reverse_IndividualBacteriaa (int i)
         double random_number = unif_distribution(reversal_rng);
         bacteria[i].turnAngle = (std::log((random_number-1.0017) / (-1.0017)))/ (-18.11);
         
+        /*
+        //Reselects to Limit distribution
+        double random_number;
+        do {
+            random_number = unif_distribution(reversal_rng);
+            bacteria[i].turnAngle = (std::log((random_number-1.0017) / (-1.0017)))/ (-18.11);
+        } while (bacteria[i].turnAngle > bacteria[i].maxTurnAngle);
+        */
+        
         // Calculate a Random value which is either +1 or -1
         int Random_Multiplier = unif_int_distribution(multiplier_rng);
         int Random_Multiplier_Value = Random_Multiplier == 0 ? -1 : 1;
@@ -1536,7 +1574,7 @@ void TissueBacteria:: Check_Perform_AllReversing_andWrapping()
                     bacteria[i].motilityMetabolism.switchMode = false ;
                 }
             }
-            else if ( bacteria[i].wrapMode == true && bacteria[i].motilityMetabolism.switchMode == true)
+            else if (( bacteria[i].wrapMode == true) && ((bacteria[i].motilityMetabolism.switchMode == true) || (bacteria[i].wrapTimer > bacteria[i].wrapPeriod)))
             {
                 //WriteWrapDataByBacteria(i);
 
